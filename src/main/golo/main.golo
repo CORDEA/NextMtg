@@ -53,10 +53,17 @@ local function events = | credentials | {
     : build()
 
   let now = DateTime(System.currentTimeMillis())
-  let events = service
+  return service
     : events()
     : list("primary")
     : setMaxResults(1)
     : setSingleEvents(true)
     : execute()
+    : getItems()
+}
+
+local function print = | events | {
+  foreach event in events {
+    println(event: getSummary())
+  }
 }
