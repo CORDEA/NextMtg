@@ -2,8 +2,8 @@
 module NextMtg
 
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver$Builder
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow$Builder
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
 import com.google.api.client.http.javanet.NetHttpTransport
@@ -11,6 +11,7 @@ import com.google.api.client.json.JsonFactory
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.client.util.DateTime
 import com.google.api.client.util.store.FileDataStoreFactory
+import com.google.api.services.calendar.Calendar$Builder
 import com.google.api.services.calendar.CalendarScopes
 
 import java.io.File
@@ -33,7 +34,7 @@ local function credentials = {
   let factory = jsonFactory()
   let stream = NextMtg.class: getResourceAsStream("credentials.json")
   let secrets = GoogleClientSecrets.load(factory, InputStreamReader(stream))
-  let flow = GoogleAuthorizationCodeFlow.Builder(
+  let flow = GoogleAuthorizationCodeFlow$Builder(
     transport(),
     factory,
     secrets,
@@ -43,7 +44,7 @@ local function credentials = {
     : setAccessType("offline")
     : build()
 
-  let receiver = LocalServerReceiver.Builder()
+  let receiver = LocalServerReceiver$Builder()
     : setPort(8080)
     : build()
 
@@ -51,7 +52,7 @@ local function credentials = {
 }
 
 local function events = | credentials | {
-  let service = Calendar.Builder(transport(), jsonFactory(), credentials)
+  let service = Calendar$Builder(transport(), jsonFactory(), credentials)
     : setApplicationName("NextMtg")
     : build()
 
