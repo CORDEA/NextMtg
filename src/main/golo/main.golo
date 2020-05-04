@@ -28,6 +28,10 @@ local function scopes = ->
   list[CalendarScopes.CALENDAR_READONLY()]
 
 function main = |args| {
+  let credentials = getCredentials()
+  let events = fetchEvents(credentials)
+  let nextEvent = findNextEvent(events)
+  printEvent(nextEvent)
 }
 
 local function getCredentials = {
