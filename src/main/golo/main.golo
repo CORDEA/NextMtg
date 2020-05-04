@@ -68,6 +68,20 @@ local function fetchEvents = | credentials | {
     : getItems()
 }
 
+local function findNextEvent = | events | {
+  let min = System.currentTimeMillis() - (10 * 60 * 1000)
+  foreach event in events {
+    let time = event: start(): dateTime()
+    if time == null {
+      continue
+    }
+    if time: value() > min {
+      return event
+    }
+  }
+  return null
+}
+
 local function print = | events | {
   foreach event in events {
     println(event: getSummary())
