@@ -18,7 +18,7 @@ local function transport = ->
   GoogleNetHttpTransport.newTrustedTransport()
 
 local function jsonFactory = ->
-  JsonFactory.getDefaultInstance()
+  JacksonFactory.getDefaultInstance()
 
 local function scopes = ->
   [CalendarScopes.CALENDAR_READONLY()]
