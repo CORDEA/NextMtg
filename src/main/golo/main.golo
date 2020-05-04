@@ -82,8 +82,11 @@ local function findNextEvent = | events | {
   return null
 }
 
-local function print = | events | {
-  foreach event in events {
-    println(event: getSummary())
+local function printEvent = | event | {
+  println(event: summary())
+  let description = event: description()
+  if description != null {
+    println(description)
   }
+  println(event: htmlLink())
 }
