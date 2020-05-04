@@ -30,7 +30,7 @@ local function scopes = ->
 function main = |args| {
 }
 
-local function credentials = {
+local function getCredentials = {
   let factory = jsonFactory()
   let stream = NextMtg.class: getResourceAsStream("credentials.json")
   let secrets = GoogleClientSecrets.load(factory, InputStreamReader(stream))
@@ -51,7 +51,7 @@ local function credentials = {
   return AuthorizationCodeInstalledApp(flow, receiver): authorize("user")
 }
 
-local function events = | credentials | {
+local function fetchEvents = | credentials | {
   let service = Calendar$Builder(transport(), jsonFactory(), credentials)
     : setApplicationName("NextMtg")
     : build()
