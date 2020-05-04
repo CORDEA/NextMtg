@@ -46,3 +46,17 @@ local function credentials = {
 
   return AuthorizationCodeInstalledApp(flow, receiver): authorize("user")
 }
+
+local function events = | credentials | {
+  let service = Calendar.Builder(transport(), jsonFactory(), credentials)
+    : setApplicationName("NextMtg")
+    : build()
+
+  let now = DateTime(System.currentTimeMillis())
+  let events = service
+    : events()
+    : list("primary")
+    : setMaxResults(1)
+    : setSingleEvents(true)
+    : execute()
+}
