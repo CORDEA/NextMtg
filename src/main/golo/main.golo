@@ -60,8 +60,10 @@ local function fetchEvents = | credentials | {
   return service
     : events()
     : list("primary")
-    : setMaxResults(1)
+    : setMaxResults(10)
     : setSingleEvents(true)
+    : setOrderBy("startTime")
+    : setTimeMin(now)
     : execute()
     : getItems()
 }
