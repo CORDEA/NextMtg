@@ -21,7 +21,7 @@ local function jsonFactory = ->
   JacksonFactory.getDefaultInstance()
 
 local function scopes = ->
-  [CalendarScopes.CALENDAR_READONLY()]
+  list[CalendarScopes.CALENDAR_READONLY()]
 
 function main = |args| {
 }
